@@ -10,7 +10,7 @@ ENV DB_NAME=hlxce \
 COPY entrypoint.sh /entrypoint.sh
 COPY hlxce.ini /usr/local/etc/php/conf.d/
 
-RUN apt-get update && apt-get -y install git sed libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g zlib1g-dev --no-install-recommends \
+RUN apt-get update && apt-get -y install git sed libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g zlib1g-dev default-mysql-client --no-install-recommends \
         && rm -rf /var/lib/apt/lists/* \
         && docker-php-ext-configure gd --with-freetype --with-jpeg \
         && docker-php-ext-install gd mysqli \
