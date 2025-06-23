@@ -30,6 +30,9 @@ if [ ! -f "/var/www/html/config.php" ]; then
             mysql --host=${DB_HOST} --user=${DB_USERNAME} --password=${DB_PASSWORD} ${DB_NAME} < sql/install.sql
         fi
     fi
+
+    # Clean up temporary direvtory
+    cd / && rm -Rfv ${TMPDIR}
 fi
 
 # Set config variables for database
