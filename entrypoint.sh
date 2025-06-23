@@ -13,6 +13,9 @@ if [ ! -f "/var/www/html/config.php" ]; then
     # Copy web base
     cp -rT source_repository/web /var/www/html
 
+    # Remove updater
+    rm -Rfv /var/www/html/updater
+
     # Install Database
     if [ "${INSTALL_DATABASE}" == "true" ]; then
         # Wait for database to become available
