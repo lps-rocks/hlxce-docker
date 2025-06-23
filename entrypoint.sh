@@ -5,7 +5,7 @@ if [ ! -f "/var/www/html/config.php" ]; then
 
     # Create temporary directory & change to it
     TMPDIR=$(mktemp -d -t install_XXX)
-    cd TMPDIR
+    cd ${TMPDIR}
 
     # Clone the source repository
     git clone ${SOURCE_REPOSITORY} source_repository
