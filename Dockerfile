@@ -4,7 +4,7 @@ ENV DB_NAME=hlxce \
     DB_USERNAME=hlxce \
     DB_PASSWORD=hlxce \
     DB_HOST=db \
-    UPDATE_DB=false \
+    INSTALL_DATABASE=false \
     SOURCE_REPOSITORY=https://github.com/lps-rocks/hlstatsx-community-edition.git
 
 COPY entrypoint.sh /entrypoint.sh
