@@ -14,7 +14,6 @@ RUN apt-get update && apt-get -y install git sed libfreetype6-dev libjpeg62-turb
         && rm -rf /var/lib/apt/lists/* \
         && docker-php-ext-configure gd --with-freetype --with-jpeg \
         && docker-php-ext-install gd mysqli \
-        && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false git \
         && chmod +x /entrypoint.sh
 
 EXPOSE 80/tcp
