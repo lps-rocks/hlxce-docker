@@ -14,7 +14,8 @@ RUN apt-get update && apt-get -y install git sed libfreetype6-dev libjpeg62-turb
         && rm -rf /var/lib/apt/lists/* \
         && docker-php-ext-configure gd --with-freetype --with-jpeg \
         && docker-php-ext-install gd mysqli \
-        && chmod +x /entrypoint.sh
+        && chmod +x /entrypoint.sh \
+        && mv /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 EXPOSE 80/tcp
 
