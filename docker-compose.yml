@@ -4,14 +4,14 @@ volumes:
   mysql:
 services:
   web:
-    image: crinis/hlxce
+    image: ghcr.io/lps-rocks/hlxce-docker:master
     environment:
       DB_HOST: db
       DB_USERNAME: hlxce
       DB_PASSWORD: hlxce
       DB_NAME: hlxce
-      # this is only required to import or update the database
-      UPDATE_DB: 'true'
+      # this is only required to try and install database on install
+      INSTALL_DATABASE: 'true'
     links:
     - db:db
     - daemon:daemon
