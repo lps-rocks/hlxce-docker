@@ -14,7 +14,7 @@ if [ ! -f "/var/www/html/config.php" ]; then
     cp -rT source_repository/web /var/www/html
 
     # Remove updater
-    rm -Rfv /var/www/html/updater
+    rm -Rf /var/www/html/updater
 
     # Install Database
     if [ "${INSTALL_DATABASE}" == "true" ]; then
@@ -30,12 +30,12 @@ if [ ! -f "/var/www/html/config.php" ]; then
             echo 'Database is already filled'
         else
             echo 'Importing database tables'
-            mysql --host=${DB_HOST} --user=${DB_USERNAME} --password=${DB_PASSWORD} ${DB_NAME} < sql/install.sql
+            mysql --host=${DB_HOST} --user=${DB_USERNAME} --password=${DB_PASSWORD} ${DB_NAME} < source_repository/sql/install.sql
         fi
     fi
 
     # Clean up temporary direvtory
-    cd / && rm -Rfv ${TMPDIR}
+    cd / && rm -Rf ${TMPDIR}
 fi
 
 # Set config variables for database
