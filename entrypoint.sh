@@ -39,9 +39,9 @@ if [ ! -f "/var/www/html/config.php" ]; then
 fi
 
 # Set config variables for database
-sed -i "/DB_NAME/s/\"\([^\"]*\)\"/\"${DB_NAME}\"/2g" /var/www/html/config.php
-sed -i "/DB_USER/s/\"\([^\"]*\)\"/\"${DB_USERNAME}\"/2g" /var/www/html/config.php
-sed -i "/DB_PASS/s/\"\([^\"]*\)\"/\"${DB_PASSWORD}\"/2g" /var/www/html/config.php
-sed -i "/DB_ADDR/s/\"\([^\"]*\)\"/\"${DB_HOST}\"/2g" /var/www/html/config.php
+sed -Ei "s/(define\(\"DB_ADDR\",\s*)'[^']*'/\1'${DB_HOST}'/" /var/www/html/config.php
+sed -Ei "s/(define\(\"DB_NAME\",\s*)'[^']*'/\1'${DB_NAME}'/" /var/www/html/config.php
+sed -Ei "s/(define\(\"DB_USER\",\s*)'[^']*'/\1'${DB_USERNAME}'/" /var/www/html/config.php
+sed -Ei "s/(define\(\"DB_PASS\",\s*)'[^']*'/\1'${DB_PASSWORD}'/" /var/www/html/config.php
 
 exec "docker-php-entrypoint" $@
