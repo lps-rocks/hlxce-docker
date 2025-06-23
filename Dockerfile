@@ -1,34 +1,26 @@
-FROM php:5-apache
+FROM php:8.1-apache
 
-ENV HLXCE_VERSION=1_6_19 \
-    DB_NAME=hlxce \
+ENV DB_NAME=hlxce \
     DB_USERNAME=hlxce \
     DB_PASSWORD=hlxce \
     DB_HOST=db \
-    UPDATE_DB=false
+    UPDATE_DB=false \
+    SOURCE_REPOSITORY=https://github.com/lps-rocks/hlstatsx-community-edition.git
 
-COPY docker-hlxce-entrypoint /usr/local/bin/
+COPY entrypoint.sh /entrypoint.sh
 COPY hlxce.ini /usr/local/etc/php/conf.d/
 
-WORKDIR /var/www/html/
-
-RUN set -xe \
-        && buildDeps=" \
-		        git \
-	    " \
-        && apt-get update && apt-get -y install $buildDeps mysql-client sed libfreetype6-dev libjpeg62-turbo-dev --no-install-recommends \
+RUN apt-get update && apt-get -y install git sed libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g zlib1g-dev --no-install-recommends \
         && rm -rf /var/lib/apt/lists/* \
-        && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-        && docker-php-ext-install mysql gd \
-        && chmod +x /usr/local/bin/docker-hlxce-entrypoint \
-        && git clone https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git hlstatsx \
-        && mv hlstatsx/web/* . \
-        && mv hlstatsx/sql/ . \
-        && rm -R hlstatsx/ \
-        && chown -R www-data:www-data . \
-        && docker-php-source delete \
-        && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $buildDeps
+        && docker-php-ext-configure gd --with-freetype --with-jpeg \
+        && docker-php-ext-install gd mysqli \
+        && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false git \
+        && chmod +x /entrypoint.sh
 
-ENTRYPOINT ["docker-hlxce-entrypoint"]
+EXPOSE 80/tcp
+
+VOLUME ["/var/www/html"]
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["apache2-foreground"]
